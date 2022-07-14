@@ -1,0 +1,101 @@
+{% load static %}
+<link href="{% static 'style.css' %}" rel="stylesheet">
+<link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<link href='https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/3.6.95/css/materialdesignicons.css' rel="stylesheet">
+
+<div class="page-content page-container" id="page-content">
+    <div class="padding">
+        <div class="row container d-flex justify-content-center">
+            <div class="col-lg-8 grid-margin stretch-card">
+                <div>
+                    {% if messages %}
+                        {% for message in messages %}
+                        <div class="container-fluid p-0">
+                        <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="True">&times;</span>
+                            </button>
+                            {{ message }}
+                        </div>
+                        </div>
+                        {% endfor %}                    
+                    {% endif %}
+                    <form method='POST' action='/search'>
+                    {% csrf_token %}
+                        <input type="text" class="form-control" placeholder="Press Enter" name='q' value={{ request.POST.q }} >
+                        <button type="submit" class="btn" style="margin-top: 2%; margin-left: 45%;">search</button>
+                    </form>
+                    
+                </div>
+                <!--weather card-->
+                <div class="card card-weather">
+                    <div class="card-body">
+                        <div class="weather-date-location">
+                            <h3>{% if weather.week == 0 %}
+                                Monday
+                                {% elif weather.week == 1%}
+                                Tusday
+                                {% elif weather.week == 2 %}
+                                Wednesday
+                                {% elif weather.week == 3%}
+                                thursday
+                                {% elif weather.week == 4%}
+                                Friday
+                                {% elif weather.week == 5%}
+                                Saturday
+                                {% else %}
+                                Sunday
+                                {% endif %}</h3>
+                            <p class="text-gray"> <span class="weather-date">{{ weather.day }} , {{ weather.month }}, {{ weather.year }}</span> <span class="weather-location">{{ weather.city }},{{ weather.location.country}} </span> </p>
+                        </div>
+                        <div class="weather-data d-flex">
+                            <div class="mr-auto">
+                                <h4 class="display-3">{{ weather.today }} <span class="symbol">°</span>C</h4>
+                                <p> {{ weather.main }} </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="d-flex weakly-weather">
+                            <div class="weakly-weather-item">
+                                <p class="mb-0"> Sun </p> <i class="mdi mdi-weather-cloudy"></i>
+                                <p class="mb-0"> 30° </p>
+                            </div>
+                            <div class="weakly-weather-item">
+                                <p class="mb-1"> Mon </p> <i class="mdi mdi-weather-hail"></i>
+                                <p class="mb-0"> 31° </p>
+                            </div>
+                            <div class="weakly-weather-item">
+                                <p class="mb-1"> Tue </p> <i class="mdi mdi-weather-partlycloudy"></i>
+                                <p class="mb-0"> 28° </p>
+                            </div>
+                            <div class="weakly-weather-item">
+                                <p class="mb-1"> Wed </p> <i class="mdi mdi-weather-pouring"></i>
+                                <p class="mb-0"> 30° </p>
+                            </div>
+                            <div class="weakly-weather-item">
+                                <p class="mb-1"> Thu </p> <i class="mdi mdi-weather-pouring"></i>
+                                <p class="mb-0"> 29° </p>
+                            </div>
+                            <div class="weakly-weather-item">
+                                <p class="mb-1"> Fri </p> <i class="mdi mdi-weather-snowy-rainy"></i>
+                                <p class="mb-0"> 31° </p>
+                            </div>
+                            <div class="weakly-weather-item">
+                                <p class="mb-1"> Sat </p> <i class="mdi mdi-weather-snowy"></i>
+                                <p class="mb-0"> 32° </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--weather card ends-->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js'></script>
